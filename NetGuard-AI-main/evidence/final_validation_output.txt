@@ -1,0 +1,112 @@
+===== AIOps Project Validation =====
+[1] Dossier projet
+/home/vboxuser/aiops-project
+.
+├── ai_detection.py
+├── controller.py
+├── evidence
+│   ├── before_after_results.md
+│   ├── final_validation_output.txt
+│   ├── metrics.csv
+│   └── screenshots
+├── metrics.py
+├── topology.py
+├── validate_project.sh
+└── .venv
+    ├── bin
+    ├── include
+    ├── lib
+    ├── lib64 -> lib
+    └── pyvenv.cfg
+
+7 directories, 9 files
+[2] Versions
+Python 3.10.12
+ansible 2.10.8
+  config file = None
+Docker version 29.1.3, build 29.1.3-0ubuntu3~22.04.2
+docker-compose version 1.29.2, build unknown
+ovs-vsctl (Open vSwitch) 2.17.9
+DB Schema 8.3.0
+[3] Services
+● openvswitch-switch.service - Open vSwitch
+     Loaded: loaded (/lib/systemd/system/openvswitch-switch.service; enabled; vendor preset: enabled)
+     Active: active (exited) since Thu 2026-05-14 14:34:53 +01; 1h 16min ago
+   Main PID: 723 (code=exited, status=0/SUCCESS)
+        CPU: 36ms
+
+ماي 14 14:34:53 netguard systemd[1]: Starting Open vSwitch...
+ماي 14 14:34:53 netguard systemd[1]: Finished Open vSwitch.
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Thu 2026-05-14 14:48:12 +01; 1h 3min ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 18947 (dockerd)
+      Tasks: 10
+     Memory: 23.1M
+        CPU: 3.596s
+     CGroup: /system.slice/docker.service
+[4] Docker containers
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[5] OVS status
+9b79bd05-2565-433c-9b5a-465fa945a3fa
+    Bridge s1
+        fail_mode: standalone
+        Port s1
+            Interface s1
+                type: internal
+        Port s1-eth1
+            Interface s1-eth1
+        Port s1-eth2
+            Interface s1-eth2
+    Bridge s2
+        fail_mode: standalone
+        Port s2-eth1
+            Interface s2-eth1
+        Port s2-eth3
+            Interface s2-eth3
+        Port s2-eth2
+            Interface s2-eth2
+        Port s2
+            Interface s2
+                type: internal
+    ovs_version: "2.17.9"
+[6] OVS flows
+NXST_FLOW reply (xid=0x4):
+ cookie=0x0, duration=2816.768s, table=0, n_packets=16075, n_bytes=506345370, idle_age=433, priority=0 actions=NORMAL
+NXST_FLOW reply (xid=0x4):
+ cookie=0x0, duration=2816.666s, table=0, n_packets=16083, n_bytes=506345974, idle_age=433, priority=0 actions=NORMAL
+[7] Logs AIOps
+2026-05-14T15:40:42 ATTACK_DETECTED suspected_ip=10.0.0.3 reason=high_traffic_or_drops mbps=53.954
+2026-05-14T15:40:42 SELF_HEALING_ACTION playbook=acl_block.yml status=dry_run
+2026-05-14T15:41:07 AIOPS_ALERT type=network_anomaly mbps=83.746 drops=0.0 errors=0.0 model_prediction=-1
+2026-05-14T15:41:07 SELF_HEALING_ACTION playbook=qos.yml status=dry_run
+2026-05-14T15:41:07 SELF_HEALING_ACTION playbook=reroute.yml status=dry_run
+2026-05-14T15:41:07 ATTACK_DETECTED suspected_ip=10.0.0.3 reason=high_traffic_or_drops mbps=83.746
+2026-05-14T15:41:07 SELF_HEALING_ACTION playbook=acl_block.yml status=dry_run
+2026-05-14T15:42:55 AIOPS_ALERT type=network_anomaly mbps=54.524 drops=0.0 errors=0.0 model_prediction=-1
+2026-05-14T15:42:55 SELF_HEALING_ACTION playbook=qos.yml status=dry_run
+2026-05-14T15:42:55 SELF_HEALING_ACTION playbook=reroute.yml status=dry_run
+2026-05-14T15:42:55 ATTACK_DETECTED suspected_ip=10.0.0.3 reason=high_traffic_or_drops mbps=54.524
+2026-05-14T15:42:55 SELF_HEALING_ACTION playbook=acl_block.yml status=dry_run
+2026-05-14T15:43:20 AIOPS_ALERT type=network_anomaly mbps=86.059 drops=0.0 errors=0.0 model_prediction=-1
+2026-05-14T15:43:20 SELF_HEALING_ACTION playbook=qos.yml status=dry_run
+2026-05-14T15:43:20 SELF_HEALING_ACTION playbook=reroute.yml status=dry_run
+2026-05-14T15:43:20 ATTACK_DETECTED suspected_ip=10.0.0.3 reason=high_traffic_or_drops mbps=86.059
+2026-05-14T15:43:20 SELF_HEALING_ACTION playbook=acl_block.yml status=dry_run
+2026-05-14T15:44:20 AIOPS_ALERT type=network_anomaly mbps=0.001 drops=0.0 errors=0.0 model_prediction=-1
+2026-05-14T15:44:20 SELF_HEALING_ACTION playbook=qos.yml status=dry_run
+2026-05-14T15:44:20 SELF_HEALING_ACTION playbook=reroute.yml status=dry_run
+[8] Metrics CSV
+2026-05-14T15:51:11,506345902,506353126,0,0,0,0,0.0,0,0
+2026-05-14T15:51:13,506345902,506353126,0,0,0,0,0.0,0,0
+2026-05-14T15:51:15,506345902,506353126,0,0,0,0,0.0,0,0
+2026-05-14T15:51:18,506345902,506353126,0,0,0,0,0.0,0,0
+2026-05-14T15:51:20,506345902,506353126,0,0,0,0,0.0,0,0
+2026-05-14T15:51:22,506345902,506353126,0,0,0,0,0.0,0,0
+2026-05-14T15:51:24,506345902,506353126,0,0,0,0,0.0,0,0
+2026-05-14T15:51:26,506345902,506353126,0,0,0,0,0.0,0,0
+2026-05-14T15:51:28,506345902,506353126,0,0,0,0,0.0,0,0
+2026-05-14T15:51:30,506345902,506353126,0,0,0,0,0.0,0,0
+===== Validation finished =====
